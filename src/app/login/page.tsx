@@ -64,14 +64,36 @@ export default function LoginPage() {
     }, 1500);
   }
 
+  // Check if user has completed onboarding after connecting wallet
   useEffect(() => {
+    const checkUserOnboarding = async () => {
+      if (address && isConnected) {
+        try {
+          // Check if user profile exists and has completed onboarding
+          const response = await fetch(
+            `/api/user/check?walletAddress=${address}`
+          );
+          const data = await response.json();
+
+          if (response.ok) {
+            if (data.exists && data.hasCompletedOnboarding) {
+              // User exists and has completed onboarding, redirect to dashboard
+              router.push("/dashboard");
+            } else {
+              // User needs to complete onboarding
+              router.push("/onboarding");
+            }
+          }
+        } catch (error) {
+          console.error("Error checking user onboarding status:", error);
+        }
+      }
+    };
+
     if (isConnected) {
-      setLoading(true);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
+      checkUserOnboarding();
     }
-  }, [isConnected, router]);
+  }, [address, isConnected, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black to-gray-900 relative overflow-hidden font-sans">

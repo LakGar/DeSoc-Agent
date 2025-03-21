@@ -7,13 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Audit {
-  id               String  @id @default(uuid())
-  contractAddress  String? @unique
-  contractCode     String
-  githubRepo       String?
-  auditScore       Float
-  vulnerabilities  Json
-  suggestions      Json
-  createdAt        DateTime @default(now())
+
+
+model DeSocUser {
+  id                  String    @id @default(uuid())
+  walletAddress       String    @unique
+  email               String?
+  ensName             String?
+  agentName           String
+  profilePicture      String?
+  interestAreas       String[] // Web3 interest areas
+  
+  // Governance preferences
+  preferredDAOs        String[]
+  votingStrategy       String   // "profit", "community", "eco-friendly", etc.
+  delegateVoting       Boolean  @default(false)
+  
+  // Reputation & Trust
+  pastContributions    Json?    // Store past contributions as JSON
+  onChainActivity      Json?    // Store activity data as JSON
+  zkmlReputationScore  Float?
+  
+  // Monetization
+  skillsExpertise      String[]
+  autoMonetization     Boolean  @default(false)
+  
+  // Security & Privacy
+  zkmlPrivacyPreference String   // "high", "medium", "low"
+  smartContractPermissions Json? // Store contract permissions as JSON
+  
+  hasCompletedOnboarding Boolean @default(false)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }

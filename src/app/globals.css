@@ -170,6 +170,30 @@
     linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
 }
 
+/* Radial Gradient */
+.bg-gradient-radial {
+  background-image: radial-gradient(
+    circle at center,
+    var(--tw-gradient-from) 0%,
+    var(--tw-gradient-to) 100%
+  );
+}
+
+/* Shadow Glow Effect */
+.shadow-glow {
+  box-shadow: 0 0 25px 0 rgba(59, 130, 246, 0.4);
+}
+
+/* Text Styles */
+.text-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.leading-tighter {
+  line-height: 1.05;
+}
+
 /* Custom Animation Classes */
 @keyframes float {
   0% {
